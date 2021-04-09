@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.hse.edu.srzhuchkov.database.BotUser;
+import ru.hse.edu.srzhuchkov.statemachine.State;
 import ru.hse.edu.srzhuchkov.telegram.command.ClearCommand;
 import ru.hse.edu.srzhuchkov.telegram.command.HelpCommand;
 import ru.hse.edu.srzhuchkov.telegram.command.StartCommand;
@@ -30,11 +31,19 @@ public class Bot extends TelegramLongPollingCommandBot {
         register(new ClearCommand("clear", "Удалить данные"));
     }
 
+    /**
+     * @return Bot username
+     */
     @Override
     public String getBotUsername() {
         return BOT_NAME;
     }
 
+    /**
+     * Returns the token of the bot to be able to perform Telegram Api Requests
+     *
+     * @return Token of the bot
+     */
     @Override
     public String getBotToken() {
         return BOT_TOKEN;
@@ -50,8 +59,8 @@ public class Bot extends TelegramLongPollingCommandBot {
     @Override
     public void processNonCommandUpdate(Update update) {
         Message message = update.getMessage();
-        BotUser user = BotUser.load(message.getFrom().getId());
-        SendMessage sendMessage = user.process(message);
+        State state = BotUser.getState(message.getFrom().getId());
+        SendMessage sendMessage = state.process(message);
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
