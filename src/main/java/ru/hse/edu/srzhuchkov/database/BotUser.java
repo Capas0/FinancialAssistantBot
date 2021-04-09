@@ -42,7 +42,17 @@ public class BotUser {
         return state;
     }
 
-    public SendMessage process(Message message) {
-        return state.process(message);
+    public static void setState(int id, State state) {
+        try (Connection connection = dbManager.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE state SET value = ? WHERE user_id = ?"
+            );
+            statement.setInt(1, state.ordinal());
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            System.out.println("Unable to set the user's state.");
+            throwables.printStackTrace();
+        }
     }
 }
