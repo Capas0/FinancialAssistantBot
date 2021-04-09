@@ -92,6 +92,7 @@ public class DBManager {
         try {
             connection.createStatement().execute(
                     "INSERT INTO CATEGORY (TITLE) VALUES\n" +
+                            "('Без категории'),\n" +
                             "('Авиабилеты'),\n" +
                             "('Автоуслуги'),\n" +
                             "('Аптеки'),\n" +
