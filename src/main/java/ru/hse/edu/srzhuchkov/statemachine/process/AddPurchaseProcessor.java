@@ -47,6 +47,8 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Покупка добавлена.");
                 break;
             case "Отмена":
+                state = State.INITIAL;
+                sendMessage.setText("Добавление покупки отменено.");
                 break;
         }
         BotUser.setState(userId, state);
