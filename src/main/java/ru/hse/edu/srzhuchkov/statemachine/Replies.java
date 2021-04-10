@@ -12,4 +12,8 @@ class Replies {
     static String[] getCancelReplies() {
         return new String[] {"Отмена"};
     }
+
+    static String[] getPurchaseCurrencyReplies() {
+        return new String[] {"RUB", "USD", "EUR", "Отмена"};
+    }
 }

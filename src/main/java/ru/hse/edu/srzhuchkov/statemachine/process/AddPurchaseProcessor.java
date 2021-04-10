@@ -25,6 +25,8 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Введите сумму покупки.");
                 break;
             case "Валюта":
+                state = State.ADD_PURCHASE_CURRENCY;
+                sendMessage.setText("Выберите валюту покупки.");
                 break;
             case "Дата":
                 break;
