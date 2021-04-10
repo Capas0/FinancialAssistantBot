@@ -3,6 +3,7 @@ package ru.hse.edu.srzhuchkov.statemachine.process;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.BotUser;
+import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 
 public class AddPurchaseProcessor extends StateProcessor {
@@ -41,6 +42,9 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Введите описание покупки.");
                 break;
             case "Подтвердить":
+                TempPurchase.confirm(message.getFrom().getId());
+                state = State.INITIAL;
+                sendMessage.setText("Покупка добавлена.");
                 break;
             case "Отмена":
                 break;

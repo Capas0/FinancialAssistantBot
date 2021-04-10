@@ -103,6 +103,26 @@ public class TempPurchase {
         }
     }
 
+    public static void confirm(int userId) {
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO purchase (user_id, pdate, amount, currency, category_id, description)\n" +
+                            "SELECT temp_purchase.user_id, temp_purchase.pdate, temp_purchase.amount,\n" +
+                            "temp_purchase.currency, temp_purchase.category_id, temp_purchase.description\n" +
+                            "FROM temp_purchase WHERE temp_purchase.user_id = ?;"
+            );
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement("DELETE FROM temp_purchase WHERE user_id = ?;");
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            System.out.println("Unable to confirm the temp purchase.");
+            throwables.printStackTrace();
+        }
+    }
+
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
