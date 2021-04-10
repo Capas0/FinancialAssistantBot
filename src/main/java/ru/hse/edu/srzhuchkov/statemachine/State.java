@@ -3,16 +3,14 @@ package ru.hse.edu.srzhuchkov.statemachine;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import ru.hse.edu.srzhuchkov.statemachine.process.AddPurchaseProcessor;
-import ru.hse.edu.srzhuchkov.statemachine.process.InitialProcessor;
-import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
-import ru.hse.edu.srzhuchkov.statemachine.view.AddPurchaseView;
-import ru.hse.edu.srzhuchkov.statemachine.view.InitialView;
-import ru.hse.edu.srzhuchkov.statemachine.view.StateView;
+import ru.hse.edu.srzhuchkov.statemachine.process.*;
+import ru.hse.edu.srzhuchkov.statemachine.view.*;
 
 public enum State {
     INITIAL(new InitialProcessor(), new InitialView(), Replies.getInitialReplies()),
-    ADD_PURCHASE(new AddPurchaseProcessor(), new AddPurchaseView(), Replies.getAddPurchaseReplies());
+    ADD_PURCHASE(new AddPurchaseProcessor(), new AddPurchaseView(), Replies.getAddPurchaseReplies()),
+    ADD_PURCHASE_AMOUNT(new PurchaseAmountProcessor(), new PurchaseAmountView(), Replies.getCancelReplies()),
+    ADD_PURCHASE_CURRENCY(new PurchaseCurrencyProcessor(), new PurchaseCurrencyView(), Replies.getCancelReplies());
 
     private final StateProcessor processor;
     private final StateView view;
@@ -36,4 +34,3 @@ public enum State {
         return replies;
     }
 }
-

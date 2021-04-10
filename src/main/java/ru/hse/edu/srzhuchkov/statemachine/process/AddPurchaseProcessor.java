@@ -3,10 +3,9 @@ package ru.hse.edu.srzhuchkov.statemachine.process;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.BotUser;
-import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 
-public class InitialProcessor extends StateProcessor {
+public class AddPurchaseProcessor extends StateProcessor {
     /**
      * Processes the received message in a certain state
      *
@@ -19,14 +18,23 @@ public class InitialProcessor extends StateProcessor {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
         State state = getState();
-        switch (message.getText()) {
-            case "Добавить покупку":
-                state = State.ADD_PURCHASE;
 
-                TempPurchase tempPurchase = TempPurchase.create(message.getFrom().getId());
-                sendMessage.setText(tempPurchase.toString());
+        switch (message.getText()) {
+            case "Сумма":
+                state = State.ADD_PURCHASE_AMOUNT;
+                sendMessage.setText("Введите сумму покупки.");
                 break;
-            case "Создать цель":
+            case "Валюта":
+                break;
+            case "Дата":
+                break;
+            case "Категория":
+                break;
+            case "Описание":
+                break;
+            case "Подтвердить":
+                break;
+            case "Отмена":
                 break;
         }
         BotUser.setState(userId, state);
@@ -41,6 +49,6 @@ public class InitialProcessor extends StateProcessor {
      */
     @Override
     public State getState() {
-        return State.INITIAL;
+        return State.ADD_PURCHASE;
     }
 }
