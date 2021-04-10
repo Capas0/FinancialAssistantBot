@@ -33,6 +33,8 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Введите дату в формате дд.мм.гггг");
                 break;
             case "Категория":
+                state = State.ADD_PURCHASE_CATEGORY;
+                sendMessage.setText("Выберите категорию.");
                 break;
             case "Описание":
                 break;
