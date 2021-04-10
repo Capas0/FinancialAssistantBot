@@ -53,7 +53,7 @@ public class DBManager {
             createTable(connection, "PURCHASE",
                     " PURCHASE_ID SERIAL PRIMARY KEY,\n" +
                             " USER_ID INTEGER NOT NULL,\n" +
-                            " PDATE INTEGER,\n" +
+                            " PDATE BIGINT,\n" +
                             " AMOUNT NUMERIC(18,2) NOT NULL CHECK (AMOUNT >= 0),\n" +
                             " CURRENCY TEXT NOT NULL,\n" +
                             " CATEGORY_ID INTEGER NOT NULL,\n" +
@@ -62,7 +62,7 @@ public class DBManager {
             );
             createTable(connection, "TEMP_PURCHASE",
                     " USER_ID INTEGER PRIMARY KEY,\n" +
-                            " PDATE INTEGER,\n" +
+                            " PDATE BIGINT,\n" +
                             " AMOUNT NUMERIC(18,2) CHECK (AMOUNT >= 0),\n" +
                             " CURRENCY TEXT,\n" +
                             " CATEGORY_ID INTEGER,\n" +
