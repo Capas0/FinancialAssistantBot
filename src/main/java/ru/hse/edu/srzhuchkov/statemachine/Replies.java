@@ -28,4 +28,8 @@ class Replies {
                 "Супермаркеты", "Такси", "Топливо", "Транспорт", "Фастфуд", "Фото и видео", "Цветы", "Дьюти-фри",
                 "Отмена"};
     }
+
+    static String[] getPurchaseDescriptionReplies() {
+        return new String[] {"-", "Отмена"};
+    }
 }

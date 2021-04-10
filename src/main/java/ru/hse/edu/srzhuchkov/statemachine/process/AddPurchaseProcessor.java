@@ -37,6 +37,8 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Выберите категорию.");
                 break;
             case "Описание":
+                state = State.ADD_PURCHASE_DESCRIPTION;
+                sendMessage.setText("Введите описание покупки.");
                 break;
             case "Подтвердить":
                 break;
