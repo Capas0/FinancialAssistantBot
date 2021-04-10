@@ -16,4 +16,8 @@ class Replies {
     static String[] getPurchaseCurrencyReplies() {
         return new String[] {"RUB", "USD", "EUR", "Отмена"};
     }
+
+    static String[] getPurchaseDateReplies() {
+        return new String[] {"Сегодня", "Отмена"};
+    }
 }

@@ -29,6 +29,8 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Выберите валюту покупки.");
                 break;
             case "Дата":
+                state = State.ADD_PURCHASE_DATE;
+                sendMessage.setText("Введите дату в формате дд.мм.гггг");
                 break;
             case "Категория":
                 break;

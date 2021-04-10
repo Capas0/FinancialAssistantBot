@@ -10,7 +10,8 @@ public enum State {
     INITIAL(new InitialProcessor(), new InitialView(), Replies.getInitialReplies()),
     ADD_PURCHASE(new AddPurchaseProcessor(), new AddPurchaseView(), Replies.getAddPurchaseReplies()),
     ADD_PURCHASE_AMOUNT(new PurchaseAmountProcessor(), new PurchaseAmountView(), Replies.getCancelReplies()),
-    ADD_PURCHASE_CURRENCY(new PurchaseCurrencyProcessor(), new PurchaseCurrencyView(), Replies.getPurchaseCurrencyReplies());
+    ADD_PURCHASE_CURRENCY(new PurchaseCurrencyProcessor(), new PurchaseCurrencyView(), Replies.getPurchaseCurrencyReplies()),
+    ADD_PURCHASE_DATE(new PurchaseDateProcessor(), new PurchaseDateView(), Replies.getPurchaseDateReplies());
 
     private final StateProcessor processor;
     private final StateView view;
