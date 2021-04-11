@@ -15,10 +15,13 @@ public class Bot extends TelegramLongPollingCommandBot {
     private final String BOT_NAME;
     private final String BOT_TOKEN;
 
+    private static Bot instance;
+
     public Bot(String botName, String botToken) {
         super();
         BOT_NAME = botName;
         BOT_TOKEN = botToken;
+        instance = this;
     }
 
     /**
@@ -66,5 +69,9 @@ public class Bot extends TelegramLongPollingCommandBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Bot getInstance() {
+        return instance;
     }
 }

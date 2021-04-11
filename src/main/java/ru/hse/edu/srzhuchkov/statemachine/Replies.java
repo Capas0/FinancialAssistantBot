@@ -6,7 +6,7 @@ class Replies {
     }
 
     static String[] getAddPurchaseReplies() {
-        return new String[] {"Сумма", "Валюта", "Дата", "Категория", "Описание", "Подтвердить", "Отмена"};
+        return new String[] {"Сумма", "Валюта", "Дата", "Категория", "Описание", "Сканировать QR код", "Подтвердить", "Отмена"};
     }
 
     static String[] getCancelReplies() {
