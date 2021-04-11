@@ -50,7 +50,7 @@ public class PurchaseAmountProcessor extends StateProcessor {
         sendMessage.setChatId(message.getChatId().toString());
         State state = State.ADD_PURCHASE;
 
-        TempPurchase tempPurchase = TempPurchase.load(message.getFrom().getId());
+        TempPurchase tempPurchase = TempPurchase.load(userId);
         if (!button) {
             tempPurchase.setAmount(amount);
             tempPurchase.save();
