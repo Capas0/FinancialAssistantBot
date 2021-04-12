@@ -1,6 +1,6 @@
 package ru.hse.edu.srzhuchkov.database;
 
-import lombok.Data;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -13,14 +13,18 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 
-@Data
 public class TempPurchase {
     private final int userId;
 
+    @Setter
     private Date date;
+    @Setter
     private BigDecimal amount;
+    @Setter
     private Currency currency;
+    @Setter
     private String category;
+    @Setter
     private String description;
 
     private TempPurchase(int userId) {
