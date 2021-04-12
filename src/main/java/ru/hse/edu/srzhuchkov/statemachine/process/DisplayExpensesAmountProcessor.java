@@ -27,6 +27,8 @@ public class DisplayExpensesAmountProcessor extends StateProcessor {
                 sendMessage.setText("Введите дату в формате дд.мм.гггг");
                 break;
             case "Валюта":
+                state = State.EXPENSES_AMOUNT_CURRENCY;
+                sendMessage.setText("Выберите валюту.");
                 break;
             case "Отобразить результат":
                 break;

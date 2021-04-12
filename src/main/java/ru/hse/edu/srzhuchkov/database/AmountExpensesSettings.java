@@ -38,8 +38,8 @@ public class AmountExpensesSettings {
     }
 
     public static AmountExpensesSettings create(int userId) {
+        AmountExpensesSettings settings = new AmountExpensesSettings(userId);
         try (Connection connection = DBManager.getInstance().getConnection()) {
-            AmountExpensesSettings settings = new AmountExpensesSettings(userId);
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO amount_expenses_settings (user_id, beg_date, end_date, currency) VALUES \n" +
                             "(?, ?, ?, 'RUB')\n" +
@@ -57,7 +57,7 @@ public class AmountExpensesSettings {
             System.out.println("Unable to create a settings for amount expenses.");
             throwables.printStackTrace();
         }
-        return null;
+        return settings;
     }
 
     public static AmountExpensesSettings load(int userId) {
@@ -73,7 +73,7 @@ public class AmountExpensesSettings {
             System.out.println("Unable to load the settings for amount expenses.");
             throwables.printStackTrace();
         }
-        return null;
+        return new AmountExpensesSettings(userId);
     }
 
     public void save() {

@@ -13,7 +13,7 @@ class Replies {
         return new String[] {"Отмена"};
     }
 
-    static String[] getPurchaseCurrencyReplies() {
+    static String[] getCurrencyReplies() {
         return new String[] {"RUB", "USD", "EUR", "Отмена"};
     }
 

@@ -47,8 +47,8 @@ public class TempPurchase {
     }
 
     public static TempPurchase create(int userId) {
+        TempPurchase tempPurchase = new TempPurchase(userId);
         try (Connection connection = DBManager.getInstance().getConnection()) {
-            TempPurchase tempPurchase = new TempPurchase(userId);
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO temp_purchase (user_id, pdate, amount, currency, category_id, description)\n" +
                             "SELECT ?, ?, 0, 'RUB', 1, '-'\n" +
@@ -64,7 +64,7 @@ public class TempPurchase {
             System.out.println("Unable to create a temp purchase.");
             throwables.printStackTrace();
         }
-        return null;
+        return tempPurchase;
     }
 
     public static TempPurchase load(int userId) {
