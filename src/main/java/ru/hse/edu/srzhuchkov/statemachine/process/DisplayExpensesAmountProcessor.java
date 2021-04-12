@@ -4,6 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.hse.edu.srzhuchkov.database.AmountExpensesSettings;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class DisplayExpensesAmountProcessor extends StateProcessor {
                 sendMessage.setText("Выберите валюту.");
                 break;
             case "Отобразить результат":
+                state = State.INITIAL;
+                sendMessage.setText(AmountExpensesSettings.execute(userId));
                 break;
             case "Отмена":
                 state = State.INITIAL;

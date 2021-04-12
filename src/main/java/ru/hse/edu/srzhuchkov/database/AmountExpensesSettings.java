@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
@@ -21,6 +22,8 @@ public class AmountExpensesSettings {
     private Date endDate;
     @Setter
     private Currency currency;
+
+    static final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     private AmountExpensesSettings(int userId) {
         this.userId = userId;
@@ -93,30 +96,37 @@ public class AmountExpensesSettings {
         }
     }
 
-    public static BigDecimal execute(int userId) {
+    public static String execute(int userId) {
+        BigDecimal result = BigDecimal.ZERO;
+        AmountExpensesSettings settings = AmountExpensesSettings.load(userId);
         try (Connection connection = DBManager.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT sum(purchase.amount)\n" +
                             "FROM purchase\n" +
                             "JOIN amount_expenses_settings AS settings\n" +
                             "ON purchase.user_id = settings.user_id\n" +
-                            "WHERE purchase.currency = settings.currency\n" +
+                            "WHERE purchase.user_id = ?\n" +
+                            "AND purchase.currency = settings.currency\n" +
                             "AND purchase.pdate >= settings.beg_date\n" +
                             "AND purchase.pdate < settings.end_date"
             );
+            statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            return resultSet.getBigDecimal(1);
+            result = resultSet.getBigDecimal(1);
         } catch (SQLException throwables) {
             System.out.println("Unable to calculate amount expenses.");
             throwables.printStackTrace();
         }
-        return null;
+        return String.format("Суммарные затраты с %s по %s составляют %s %s.",
+                dateFormat.format(settings.beginDate),
+                dateFormat.format(settings.endDate),
+                new DecimalFormat("0.00").format(result),
+                settings.currency);
     }
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
         return String.format("Будут подсчитаны суммарные траты, совершенные с %s по %s в %s.",
                 dateFormat.format(beginDate),
