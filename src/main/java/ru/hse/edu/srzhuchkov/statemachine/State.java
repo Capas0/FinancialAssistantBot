@@ -4,6 +4,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import ru.hse.edu.srzhuchkov.statemachine.process.*;
+import ru.hse.edu.srzhuchkov.statemachine.process.expenses.ExpensesBeginDateProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.expenses.ExpensesEndDateProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountBeginDateProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountCurrencyProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountEndDateProcessor;
@@ -21,7 +23,10 @@ public enum State {
     DISPLAY_EXPENSES_AMOUNT(new DisplayExpensesAmountProcessor(), Replies.getDisplayExpensesAmountReplies()),
     EXPENSES_AMOUNT_BEGIN_DATE(new ExpensesAmountBeginDateProcessor(), Replies.getDateReplies()),
     EXPENSES_AMOUNT_END_DATE(new ExpensesAmountEndDateProcessor(), Replies.getDateReplies()),
-    EXPENSES_AMOUNT_CURRENCY(new ExpensesAmountCurrencyProcessor(), Replies.getCurrencyReplies());
+    EXPENSES_AMOUNT_CURRENCY(new ExpensesAmountCurrencyProcessor(), Replies.getCurrencyReplies()),
+    DISPLAY_EXPENSES(new DisplayExpensesProcessor(), Replies.getDisplayExpensesReplies()),
+    EXPENSES_BEGIN_DATE(new ExpensesBeginDateProcessor(), Replies.getDateReplies()),
+    EXPENSES_END_DATE(new ExpensesEndDateProcessor(), Replies.getDateReplies());
 
     private final StateProcessor processor;
     private final String[] replies;

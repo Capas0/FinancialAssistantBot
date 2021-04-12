@@ -2,7 +2,7 @@ package ru.hse.edu.srzhuchkov.statemachine;
 
 class Replies {
     static String[] getInitialReplies() {
-        return new String[] {"Добавить покупку", "Общая сумма расходов"};
+        return new String[] {"Добавить покупку", "Общая сумма расходов", "Список расходов"};
     }
 
     static String[] getAddPurchaseReplies() {
@@ -35,5 +35,9 @@ class Replies {
 
     static String[] getDisplayExpensesAmountReplies() {
         return new String[] {"Дата начала", "Дата конца", "Валюта", "Отобразить результат", "Отмена"};
+    }
+
+    static String[] getDisplayExpensesReplies() {
+        return new String[] {"Дата начала", "Дата конца", "Отобразить результат", "Отмена"};
     }
 }

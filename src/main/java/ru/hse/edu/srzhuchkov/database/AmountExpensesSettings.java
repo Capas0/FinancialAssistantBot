@@ -127,7 +127,6 @@ public class AmountExpensesSettings {
 
     @Override
     public String toString() {
-
         return String.format("Будут подсчитаны суммарные траты, совершенные с %s по %s в %s.",
                 dateFormat.format(beginDate),
                 dateFormat.format(endDate),
