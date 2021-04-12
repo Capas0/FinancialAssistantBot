@@ -1,4 +1,4 @@
-package ru.hse.edu.srzhuchkov.statemachine.process;
+package ru.hse.edu.srzhuchkov.statemachine.process.purchase;
 
 import com.google.zxing.NotFoundException;
 import org.telegram.telegrambots.meta.api.methods.GetFile;
@@ -10,6 +10,7 @@ import ru.hse.edu.srzhuchkov.QRCodeReader;
 import ru.hse.edu.srzhuchkov.database.BotUser;
 import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
+import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
 import ru.hse.edu.srzhuchkov.telegram.Bot;
 
 import java.io.File;
@@ -23,22 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 public class PurchaseQRProcessor extends StateProcessor {
-    /**
-     * Processes the received message in a certain state
-     *
-     * @param message the received message
-     * @return reply message
-     */
     @Override
-    public SendMessage process(Message message) {
+    protected boolean validate(Message message) {
         if (message.hasPhoto()) {
-            return deepProcess(message);
+            return true;
         }
-
-        int userId = message.getFrom().getId();
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(message.getChatId().toString());
-        State state = State.ADD_PURCHASE_QR;
         if (message.hasText() && message.getText().equals("Отмена")) {
             state = State.ADD_PURCHASE;
             TempPurchase tempPurchase = TempPurchase.load(userId);
@@ -47,23 +37,17 @@ public class PurchaseQRProcessor extends StateProcessor {
         else {
             sendMessage.setText("Фото не получено.");
         }
-        BotUser.setState(userId, state);
-        sendMessage.setReplyMarkup(state.display());
-        return sendMessage;
+        return false;
     }
 
     /**
      * Processes the received message in a certain state
      *
      * @param message the received message
-     * @return reply message
      */
     @Override
-    protected SendMessage deepProcess(Message message) {
-        int userId = message.getFrom().getId();
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(message.getChatId().toString());
-        State state = State.ADD_PURCHASE;
+    protected void deepProcess(Message message) {
+        state = State.ADD_PURCHASE;
 
         try {
             List<PhotoSize> photos = message.getPhoto();
@@ -85,6 +69,7 @@ public class PurchaseQRProcessor extends StateProcessor {
         } catch (IOException | TelegramApiException e) {
             System.out.println("Unable to load photo.");
             e.printStackTrace();
+            sendMessage.setText("Не удалось загрузить фото с сервера, попробуйте позднее.");
         } catch (NotFoundException e) {
             state = State.ADD_PURCHASE_QR;
             sendMessage.setText("QR код не найден.");
@@ -92,10 +77,6 @@ public class PurchaseQRProcessor extends StateProcessor {
             state = State.ADD_PURCHASE_QR;
             sendMessage.setText("QR код не содержит нужной информации.");
         }
-
-        BotUser.setState(userId, state);
-        sendMessage.setReplyMarkup(state.display());
-        return sendMessage;
     }
 
     /**
@@ -110,7 +91,7 @@ public class PurchaseQRProcessor extends StateProcessor {
 
     private Map<String, Object> parseText(String text) throws ParseException {
         HashMap<String, Object> res = new HashMap<>();
-        if (!text.matches("t=\\d{8}T\\d{6}&s=[\\d.]+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d+")) {
+        if (!text.matches("t=\\d{8}T\\d+&s=[\\d.]+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d+")) {
             throw new IllegalArgumentException();
         }
         res.put("date", new SimpleDateFormat("yyyyMMdd").parse(text.substring(2, 10)));

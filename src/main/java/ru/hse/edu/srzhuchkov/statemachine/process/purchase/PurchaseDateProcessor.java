@@ -1,10 +1,9 @@
-package ru.hse.edu.srzhuchkov.statemachine.process;
+package ru.hse.edu.srzhuchkov.statemachine.process.purchase;
 
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.hse.edu.srzhuchkov.database.BotUser;
 import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
+import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,14 +17,12 @@ public class PurchaseDateProcessor extends StateProcessor {
     boolean button;
     Date date;
 
-    /**
-     * Processes the received message in a certain state
-     *
-     * @param message the received message
-     * @return reply message
-     */
     @Override
-    public SendMessage process(Message message) {
+    protected boolean validate(Message message) {
+        if (!message.hasText()) {
+            sendMessage.setText("Не могу распознать дату, попробуйте еще раз.");
+            return false;
+        }
         button = Arrays.asList(getState().getReplies()).contains(message.getText());
         try {
             date = format.parse(message.getText());
@@ -33,27 +30,20 @@ public class PurchaseDateProcessor extends StateProcessor {
             date = null;
         }
         if (!button && date == null) {
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.setChatId(message.getChatId().toString());
             sendMessage.setText("Не могу распознать дату, попробуйте еще раз.");
-            sendMessage.setReplyMarkup(getState().display());
-            return sendMessage;
+            return false;
         }
-        return deepProcess(message);
+        return true;
     }
 
     /**
      * Processes the received message in a certain state
      *
      * @param message the received message
-     * @return reply message
      */
     @Override
-    protected SendMessage deepProcess(Message message) {
-        int userId = message.getFrom().getId();
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(message.getChatId().toString());
-        State state = State.ADD_PURCHASE;
+    protected void deepProcess(Message message) {
+        state = State.ADD_PURCHASE;
 
         TempPurchase tempPurchase = TempPurchase.load(userId);
         if (!button) {
@@ -65,10 +55,6 @@ public class PurchaseDateProcessor extends StateProcessor {
             tempPurchase.save();
         }
         sendMessage.setText(tempPurchase.toString());
-
-        BotUser.setState(userId, state);
-        sendMessage.setReplyMarkup(state.display());
-        return sendMessage;
     }
 
     /**
