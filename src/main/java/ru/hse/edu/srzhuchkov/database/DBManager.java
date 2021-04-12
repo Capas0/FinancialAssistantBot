@@ -72,6 +72,12 @@ public class DBManager {
                     " USER_ID INTEGER PRIMARY KEY,\n" +
                             " VALUE INTEGER CHECK (VALUE >= 0)"
             );
+            createTable(connection, "AMOUNT_EXPENSES_SETTINGS",
+                    " USER_ID INTEGER PRIMARY KEY,\n" +
+                            " BEG_DATE BIGINT,\n" +
+                            " END_DATE BIGINT,\n" +
+                            " CURRENCY TEXT"
+            );
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

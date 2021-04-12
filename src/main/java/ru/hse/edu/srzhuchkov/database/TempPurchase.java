@@ -47,7 +47,6 @@ public class TempPurchase {
     }
 
     public static TempPurchase create(int userId) {
-        TempPurchase res = null;
         try (Connection connection = DBManager.getInstance().getConnection()) {
             TempPurchase tempPurchase = new TempPurchase(userId);
             PreparedStatement statement = connection.prepareStatement(
@@ -60,12 +59,12 @@ public class TempPurchase {
             statement.setLong(3, tempPurchase.date.getTime());
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            res = new TempPurchase(resultSet);
+            return new TempPurchase(resultSet);
         } catch (SQLException throwables) {
             System.out.println("Unable to create a temp purchase.");
             throwables.printStackTrace();
         }
-        return res;
+        return null;
     }
 
     public static TempPurchase load(int userId) {

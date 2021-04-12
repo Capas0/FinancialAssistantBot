@@ -1,6 +1,7 @@
 package ru.hse.edu.srzhuchkov.statemachine.process;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.hse.edu.srzhuchkov.database.AmountExpensesSettings;
 import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 
@@ -19,7 +20,11 @@ public class InitialProcessor extends StateProcessor {
                 TempPurchase tempPurchase = TempPurchase.create(userId);
                 sendMessage.setText(tempPurchase.toString());
                 break;
-            case "Создать цель":
+            case "Общая сумма расходов":
+                state = State.DISPLAY_EXPENSES_AMOUNT;
+
+                AmountExpensesSettings settings = AmountExpensesSettings.create(userId);
+                sendMessage.setText(settings.toString());
                 break;
         }
     }

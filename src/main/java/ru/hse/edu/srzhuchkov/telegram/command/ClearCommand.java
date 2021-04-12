@@ -39,9 +39,13 @@ public class ClearCommand extends BaseCommand {
             statement2.setInt(1, user.getId());
             statement2.executeUpdate();
 
-            PreparedStatement statement3 = connection.prepareStatement("UPDATE state SET value = 0 WHERE user_id = ?");
+            PreparedStatement statement3 = connection.prepareStatement("DELETE FROM amount_expenses_settings WHERE user_id = ?");
             statement3.setInt(1, user.getId());
             statement3.executeUpdate();
+
+            PreparedStatement statement4 = connection.prepareStatement("UPDATE state SET value = 0 WHERE user_id = ?");
+            statement4.setInt(1, user.getId());
+            statement4.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("Unable to clear the user data.");
             throwables.printStackTrace();
