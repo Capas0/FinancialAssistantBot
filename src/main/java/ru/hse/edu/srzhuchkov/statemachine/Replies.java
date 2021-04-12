@@ -17,7 +17,7 @@ class Replies {
         return new String[] {"RUB", "USD", "EUR", "Отмена"};
     }
 
-    static String[] getPurchaseDateReplies() {
+    static String[] getDateReplies() {
         return new String[] {"Сегодня", "Отмена"};
     }
 

@@ -19,8 +19,12 @@ public class DisplayExpensesAmountProcessor extends StateProcessor {
     protected void deepProcess(Message message) {
         switch (message.getText()) {
             case "Дата начала":
+                state = State.EXPENSES_AMOUNT_BEGIN_DATE;
+                sendMessage.setText("Введите дату в формате дд.мм.гггг");
                 break;
             case "Дата конца":
+                state = State.EXPENSES_AMOUNT_END_DATE;
+                sendMessage.setText("Введите дату в формате дд.мм.гггг");
                 break;
             case "Валюта":
                 break;

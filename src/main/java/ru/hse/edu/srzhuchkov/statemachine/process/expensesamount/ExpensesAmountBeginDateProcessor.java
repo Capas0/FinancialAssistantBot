@@ -1,14 +1,13 @@
-package ru.hse.edu.srzhuchkov.statemachine.process.purchase;
+package ru.hse.edu.srzhuchkov.statemachine.process.expensesamount;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.hse.edu.srzhuchkov.database.TempPurchase;
+import ru.hse.edu.srzhuchkov.database.AmountExpensesSettings;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 import ru.hse.edu.srzhuchkov.statemachine.process.DateProcessor;
 
 import java.util.Date;
 
-public class PurchaseDateProcessor extends DateProcessor {
-
+public class ExpensesAmountBeginDateProcessor extends DateProcessor {
     /**
      * Processes the received message in a certain state
      *
@@ -16,18 +15,18 @@ public class PurchaseDateProcessor extends DateProcessor {
      */
     @Override
     protected void deepProcess(Message message) {
-        state = State.ADD_PURCHASE;
+        state = State.DISPLAY_EXPENSES_AMOUNT;
 
-        TempPurchase tempPurchase = TempPurchase.load(userId);
+        AmountExpensesSettings settings = AmountExpensesSettings.load(userId);
         if (!button) {
-            tempPurchase.setDate(date);
-            tempPurchase.save();
+            settings.setBeginDate(date);
+            settings.save();
         }
         else if (message.getText().equals("Сегодня")) {
-            tempPurchase.setDate(new Date());
-            tempPurchase.save();
+            settings.setBeginDate(new Date());
+            settings.save();
         }
-        sendMessage.setText(tempPurchase.toString());
+        sendMessage.setText(settings.toString());
     }
 
     /**
@@ -37,6 +36,6 @@ public class PurchaseDateProcessor extends DateProcessor {
      */
     @Override
     public State getState() {
-        return State.ADD_PURCHASE_DATE;
+        return State.EXPENSES_AMOUNT_BEGIN_DATE;
     }
 }

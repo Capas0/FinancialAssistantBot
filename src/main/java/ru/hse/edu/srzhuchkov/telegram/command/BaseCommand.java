@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.hse.edu.srzhuchkov.database.DBManager;
 
 public abstract class BaseCommand extends BotCommand {
-    protected DBManager dbManager = DBManager.getInstance();
+    protected final DBManager dbManager = DBManager.getInstance();
 
     /**
      * Construct a command

@@ -19,5 +19,6 @@ public class Application {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+        System.out.println("Bot is started.");
     }
 }
