@@ -42,10 +42,14 @@ class Replies {
     }
 
     static String[] getFundReplies() {
-        return new String[] {"Пополнить", "Создать цель для накопления", "Назад"};
+        return new String[] {"Пополнить", "Цель для накопления", "Назад"};
     }
 
     public static String[] getFundDepositReplies() {
         return new String[] {"Сумма", "Валюта", "Подтвердить", "Отмена"};
+    }
+
+    public static String[] getFundGoalReplies() {
+        return new String[] {"Сумма", "Валюта", "Создать", "Удалить", "Отмена"};
     }
 }

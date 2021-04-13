@@ -83,6 +83,12 @@ public class DBManager {
                             "AMOUNT NUMERIC(18,2) CHECK (AMOUNT >= 0),\n" +
                             "CURRENCY TEXT"
             );
+            createTable(connection, "FUND_GOAL",
+                    "USER_ID INTEGER PRIMARY KEY,\n" +
+                            "AMOUNT NUMERIC(18,2) CHECK (AMOUNT >= 0),\n" +
+                            "CURRENCY TEXT,\n" +
+                            "ENABLED BOOLEAN"
+            );
             createTable(connection, "AMOUNT_EXPENSES_SETTINGS",
                     "USER_ID INTEGER PRIMARY KEY,\n" +
                             "BEG_DATE BIGINT,\n" +

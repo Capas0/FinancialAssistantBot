@@ -11,6 +11,8 @@ import ru.hse.edu.srzhuchkov.statemachine.process.expenses.ExpensesEndDateProces
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountBeginDateProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountCurrencyProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountEndDateProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.goal.FundGoalAmountProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.goal.FundGoalCurrencyProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.purchase.*;
 
 public enum State {
@@ -34,7 +36,10 @@ public enum State {
     FUND(new FundProcessor(), Replies.getFundReplies()),
     FUND_DEPOSIT(new FundDepositProcessor(), Replies.getFundDepositReplies()),
     FUND_DEPOSIT_AMOUNT(new FundDepositAmountProcessor(), Replies.getCancelReplies()),
-    FUND_DEPOSIT_CURRENCY(new FundDepositCurrencyProcessor(), Replies.getCurrencyReplies());
+    FUND_DEPOSIT_CURRENCY(new FundDepositCurrencyProcessor(), Replies.getCurrencyReplies()),
+    FUND_GOAL(new FundGoalProcessor(), Replies.getFundGoalReplies()),
+    FUND_GOAL_AMOUNT(new FundGoalAmountProcessor(), Replies.getCancelReplies()),
+    FUND_GOAL_CURRENCY(new FundGoalCurrencyProcessor(), Replies.getCurrencyReplies());
 
     private final StateProcessor processor;
     private final String[] replies;
