@@ -2,9 +2,11 @@ package ru.hse.edu.srzhuchkov.telegram;
 
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.hse.edu.srzhuchkov.database.Slider;
 import ru.hse.edu.srzhuchkov.database.BotUser;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 import ru.hse.edu.srzhuchkov.telegram.command.ClearCommand;
@@ -61,13 +63,23 @@ public class Bot extends TelegramLongPollingCommandBot {
      */
     @Override
     public void processNonCommandUpdate(Update update) {
-        Message message = update.getMessage();
-        State state = BotUser.getState(message.getFrom().getId());
-        SendMessage sendMessage = state.process(message);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        if (update.hasMessage()) {
+            Message message = update.getMessage();
+            State state = BotUser.getState(message.getFrom().getId());
+            SendMessage sendMessage = state.process(message);
+            try {
+                execute(sendMessage);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (update.hasCallbackQuery()) {
+            EditMessageText text = Slider.process(update.getCallbackQuery());
+            try {
+                execute(text);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 

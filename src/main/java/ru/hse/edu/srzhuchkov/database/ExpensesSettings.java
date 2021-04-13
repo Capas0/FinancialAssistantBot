@@ -1,6 +1,9 @@
 package ru.hse.edu.srzhuchkov.database;
 
 import lombok.Setter;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.hse.edu.srzhuchkov.telegram.Bot;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -72,10 +75,6 @@ public class ExpensesSettings {
         return new ExpensesSettings(userId);
     }
 
-    public static String execute(int userId) {
-        return null;
-    }
-
     public void save() {
         try (Connection connection = DBManager.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement(
@@ -92,9 +91,43 @@ public class ExpensesSettings {
         }
     }
 
+    public static void execute(int userId, long chatId) {
+        SendMessage sendMessage = new SendMessage(String.valueOf(chatId), "В данном интервале трат не было.");
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            int sliderId = DateSlider.create(userId);
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT purchase_id,\n" +
+                            " LAG(purchase_id) OVER (ORDER BY pdate, purchase_id) AS prev,\n" +
+                            " LEAD(purchase_id) OVER (ORDER BY pdate, purchase_id) AS next\n" +
+                            "FROM purchase\n" +
+                            "JOIN amount_expenses_settings settings ON purchase.user_id = settings.user_id\n" +
+                            "WHERE settings.user_id = ? AND pdate BETWEEN settings.beg_date AND settings.end_date\n" +
+                            "LIMIT 1"
+            );
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            int prev = 0, next = 0;
+            int purchaseId = 0;
+            if (resultSet.next()) {
+                purchaseId = resultSet.getInt("purchase_id");
+                prev = resultSet.getInt("prev");
+                next = resultSet.getInt("next");
+            }
+            sendMessage.setText(Purchase.load(userId, purchaseId).toString());
+            sendMessage.setReplyMarkup(DateSlider.getMarkup(sliderId, prev, next));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            Bot.getInstance().execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public String toString() {
-        return String.format("Будут траты, совершенные с %s по %s.",
+        return String.format("Будут отображены траты, совершенные с %s по %s.",
                 dateFormat.format(beginDate),
                 dateFormat.format(endDate));
     }

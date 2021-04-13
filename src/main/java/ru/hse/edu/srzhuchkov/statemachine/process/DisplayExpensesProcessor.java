@@ -23,8 +23,8 @@ public class DisplayExpensesProcessor extends StateProcessor {
                 break;
             case "Отобразить результат":
                 state = State.INITIAL;
-//                sendMessage.setText(ExpensesSettings.execute(userId));
-                sendMessage.setText("Не реализовано");
+                ExpensesSettings.execute(userId, message.getChatId());
+                sendMessage.setText("Выберите функцию.");
                 break;
             case "Отмена":
                 state = State.INITIAL;

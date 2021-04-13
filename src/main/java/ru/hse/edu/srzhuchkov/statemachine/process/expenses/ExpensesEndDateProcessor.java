@@ -1,7 +1,6 @@
 package ru.hse.edu.srzhuchkov.statemachine.process.expenses;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.hse.edu.srzhuchkov.database.AmountExpensesSettings;
 import ru.hse.edu.srzhuchkov.database.ExpensesSettings;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 import ru.hse.edu.srzhuchkov.statemachine.process.DateProcessor;

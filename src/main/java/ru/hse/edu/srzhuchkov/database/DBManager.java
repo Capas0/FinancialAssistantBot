@@ -46,37 +46,43 @@ public class DBManager {
     public void createTables() {
         try (Connection connection = getConnection()) {
             createTable(connection, "CATEGORY",
-                    " CATEGORY_ID SERIAL PRIMARY KEY,\n" +
-                            " TITLE TEXT UNIQUE"
+                    "CATEGORY_ID SERIAL PRIMARY KEY,\n" +
+                            "TITLE TEXT UNIQUE"
             );
             fillCategories(connection);
             createTable(connection, "PURCHASE",
-                    " PURCHASE_ID SERIAL PRIMARY KEY,\n" +
-                            " USER_ID INTEGER NOT NULL,\n" +
-                            " PDATE BIGINT,\n" +
-                            " AMOUNT NUMERIC(18,2) NOT NULL CHECK (AMOUNT >= 0),\n" +
-                            " CURRENCY TEXT NOT NULL,\n" +
-                            " CATEGORY_ID INTEGER NOT NULL,\n" +
-                            " DESCRIPTION TEXT,\n" +
-                            " FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORY(CATEGORY_ID)"
+                    "PURCHASE_ID SERIAL PRIMARY KEY,\n" +
+                            "USER_ID INTEGER NOT NULL,\n" +
+                            "PDATE BIGINT,\n" +
+                            "AMOUNT NUMERIC(18,2) NOT NULL CHECK (AMOUNT >= 0),\n" +
+                            "CURRENCY TEXT NOT NULL,\n" +
+                            "CATEGORY_ID INTEGER NOT NULL,\n" +
+                            "DESCRIPTION TEXT,\n" +
+                            "FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORY(CATEGORY_ID)"
             );
             createTable(connection, "TEMP_PURCHASE",
-                    " USER_ID INTEGER PRIMARY KEY,\n" +
-                            " PDATE BIGINT,\n" +
-                            " AMOUNT NUMERIC(18,2) CHECK (AMOUNT >= 0),\n" +
-                            " CURRENCY TEXT,\n" +
-                            " CATEGORY_ID INTEGER,\n" +
-                            " DESCRIPTION TEXT"
+                    "USER_ID INTEGER PRIMARY KEY,\n" +
+                            "PDATE BIGINT,\n" +
+                            "AMOUNT NUMERIC(18,2) CHECK (AMOUNT >= 0),\n" +
+                            "CURRENCY TEXT,\n" +
+                            "CATEGORY_ID INTEGER,\n" +
+                            "DESCRIPTION TEXT"
             );
             createTable(connection, "STATE",
-                    " USER_ID INTEGER PRIMARY KEY,\n" +
-                            " VALUE INTEGER CHECK (VALUE >= 0)"
+                    "USER_ID INTEGER PRIMARY KEY,\n" +
+                            "VALUE INTEGER CHECK (VALUE >= 0)"
             );
             createTable(connection, "AMOUNT_EXPENSES_SETTINGS",
-                    " USER_ID INTEGER PRIMARY KEY,\n" +
-                            " BEG_DATE BIGINT,\n" +
-                            " END_DATE BIGINT,\n" +
-                            " CURRENCY TEXT"
+                    "USER_ID INTEGER PRIMARY KEY,\n" +
+                            "BEG_DATE BIGINT,\n" +
+                            "END_DATE BIGINT,\n" +
+                            "CURRENCY TEXT"
+            );
+            createTable(connection, "DATE_SLIDER",
+                    "SLIDER_ID SERIAL PRIMARY KEY,\n" +
+                            "USER_ID INTEGER NOT NULL,\n" +
+                            "BEG_DATE BIGINT NOT NULL,\n" +
+                            "END_DATE BIGINT NOT NULL"
             );
         } catch (SQLException throwables) {
             throwables.printStackTrace();
