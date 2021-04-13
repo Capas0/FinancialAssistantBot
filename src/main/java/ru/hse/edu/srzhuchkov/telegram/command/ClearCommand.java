@@ -31,21 +31,30 @@ public class ClearCommand extends BaseCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         try (Connection connection = dbManager.getConnection()) {
-            PreparedStatement statement1 = connection.prepareStatement("DELETE FROM purchase WHERE user_id = ?");
-            statement1.setInt(1, user.getId());
-            statement1.executeUpdate();
+            PreparedStatement statement;
+            statement = connection.prepareStatement("DELETE FROM purchase WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
 
-            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM temp_purchase WHERE user_id = ?");
-            statement2.setInt(1, user.getId());
-            statement2.executeUpdate();
+            statement = connection.prepareStatement("DELETE FROM temp_purchase WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
 
-            PreparedStatement statement3 = connection.prepareStatement("DELETE FROM amount_expenses_settings WHERE user_id = ?");
-            statement3.setInt(1, user.getId());
-            statement3.executeUpdate();
+            statement = connection.prepareStatement("DELETE FROM amount_expenses_settings WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
 
-            PreparedStatement statement4 = connection.prepareStatement("UPDATE state SET value = 0 WHERE user_id = ?");
-            statement4.setInt(1, user.getId());
-            statement4.executeUpdate();
+            statement = connection.prepareStatement("DELETE FROM date_slider WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement("DELETE FROM category_slider WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement("UPDATE state SET value = 0 WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("Unable to clear the user data.");
             throwables.printStackTrace();
