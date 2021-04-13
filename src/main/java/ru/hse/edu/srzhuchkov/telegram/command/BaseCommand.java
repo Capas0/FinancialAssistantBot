@@ -29,6 +29,7 @@ public abstract class BaseCommand extends BotCommand {
         SendMessage message = new SendMessage();
         message.setChatId(chatId.toString());
         message.setReplyMarkup(keyboard);
+        message.enableMarkdown(true);
         message.setText(text);
         try {
             absSender.execute(message);
