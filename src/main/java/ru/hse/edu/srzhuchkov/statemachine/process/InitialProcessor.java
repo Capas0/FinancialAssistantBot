@@ -38,7 +38,7 @@ public class InitialProcessor extends StateProcessor {
                 break;
             case "Счет":
                 state = State.FUND;
-                sendMessage.setText(Fund.format(Fund.getFund(userId)));
+                sendMessage.setText(Fund.load(userId).toString());
                 break;
         }
     }

@@ -4,6 +4,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import ru.hse.edu.srzhuchkov.statemachine.process.*;
+import ru.hse.edu.srzhuchkov.statemachine.process.deposit.FundDepositAmountProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.deposit.FundDepositCurrencyProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expenses.ExpensesBeginDateProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expenses.ExpensesEndDateProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountBeginDateProcessor;
@@ -29,7 +31,10 @@ public enum State {
     EXPENSES_END_DATE(new ExpensesEndDateProcessor(), Replies.getDateReplies()),
     DISPLAY_EXPENSES_CATEGORY(new DisplayExpensesCategoryProcessor(), Replies.getCategoryReplies()),
     DISPLAY_AMOUNT_EXPENSES_CATEGORY_COHORTS(new DisplayAmountExpensesCategoryCohortsProcessor(), Replies.getCurrencyReplies()),
-    FUND(new FundProcessor(), Replies.getFundReplies());
+    FUND(new FundProcessor(), Replies.getFundReplies()),
+    FUND_DEPOSIT(new FundDepositProcessor(), Replies.getFundDepositReplies()),
+    FUND_DEPOSIT_AMOUNT(new FundDepositAmountProcessor(), Replies.getCancelReplies()),
+    FUND_DEPOSIT_CURRENCY(new FundDepositCurrencyProcessor(), Replies.getCurrencyReplies());
 
     private final StateProcessor processor;
     private final String[] replies;

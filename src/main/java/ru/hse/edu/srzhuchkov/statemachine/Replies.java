@@ -44,4 +44,8 @@ class Replies {
     static String[] getFundReplies() {
         return new String[] {"Пополнить", "Создать цель для накопления", "Назад"};
     }
+
+    public static String[] getFundDepositReplies() {
+        return new String[] {"Сумма", "Валюта", "Подтвердить", "Отмена"};
+    }
 }

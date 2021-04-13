@@ -1,6 +1,7 @@
 package ru.hse.edu.srzhuchkov.statemachine.process;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.hse.edu.srzhuchkov.database.FundDeposit;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 
 public class FundProcessor extends StateProcessor {
@@ -15,6 +16,12 @@ public class FundProcessor extends StateProcessor {
             case "Назад":
                 state = State.INITIAL;
                 sendMessage.setText("Выберите действие.");
+                break;
+            case "Пополнить":
+                state = State.FUND_DEPOSIT;
+                sendMessage.setText(FundDeposit.create(userId).toString());
+                break;
+            case "Создать цель для накопления":
                 break;
         }
     }

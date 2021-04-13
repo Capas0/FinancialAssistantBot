@@ -38,7 +38,7 @@ public class AddPurchaseProcessor extends StateProcessor {
                 sendMessage.setText("Отправьте фото QR кода с чека.");
                 break;
             case "Подтвердить":
-                TempPurchase.confirm(message.getFrom().getId());
+                TempPurchase.confirm(userId);
                 state = State.INITIAL;
                 sendMessage.setText("Покупка добавлена.");
                 break;

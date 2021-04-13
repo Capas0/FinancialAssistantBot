@@ -3,34 +3,9 @@ package ru.hse.edu.srzhuchkov.statemachine.process.purchase;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
-import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.AmountProcessor;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-
-public class PurchaseAmountProcessor extends StateProcessor {
-    boolean button;
-    BigDecimal amount;
-
-    @Override
-    protected boolean validate(Message message) {
-        if (!message.hasText()) {
-            sendMessage.setText("Не могу распознать сумму, попробуйте еще раз.");
-            return false;
-        }
-        button = Arrays.asList(getState().getReplies()).contains(message.getText());
-        try {
-            amount = BigDecimal.valueOf(Double.parseDouble(message.getText()));
-        } catch (NumberFormatException e) {
-            amount = BigDecimal.valueOf(-1);
-        }
-        if (!button && amount.doubleValue() < 0) {
-            sendMessage.setText("Не могу распознать сумму, попробуйте еще раз.");
-            return false;
-        }
-        return true;
-    }
-
+public class PurchaseAmountProcessor extends AmountProcessor {
     /**
      * Processes the received message in a certain state
      *
