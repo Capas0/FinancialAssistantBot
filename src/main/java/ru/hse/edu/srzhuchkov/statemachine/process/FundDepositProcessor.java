@@ -1,9 +1,13 @@
 package ru.hse.edu.srzhuchkov.statemachine.process;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.hse.edu.srzhuchkov.database.Fund;
 import ru.hse.edu.srzhuchkov.database.FundDeposit;
+import ru.hse.edu.srzhuchkov.database.FundGoal;
 import ru.hse.edu.srzhuchkov.statemachine.State;
+import ru.hse.edu.srzhuchkov.telegram.Bot;
 
 public class FundDepositProcessor extends StateProcessor {
     /**
@@ -25,7 +29,7 @@ public class FundDepositProcessor extends StateProcessor {
             case "Подтвердить":
                 state = State.INITIAL;
                 FundDeposit.confirm(userId);
-                sendMessage.setText("Пополнение совершено.");
+                sendMessage.setText(check(message.getChatId()));
                 break;
             case "Отмена":
                 state = State.FUND;
@@ -42,5 +46,19 @@ public class FundDepositProcessor extends StateProcessor {
     @Override
     public State getState() {
         return State.FUND_DEPOSIT;
+    }
+
+    private String check(long chatId) {
+        if (!FundGoal.check(userId)) {
+            return "Пополнение совершено.";
+        }
+
+        try {
+            Bot.getInstance().execute(new SendMessage(String.valueOf(chatId), "Пополнение совершено."));
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+
+        return "Поздавляю! Цель накопления достигнута!";
     }
 }

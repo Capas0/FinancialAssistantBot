@@ -50,6 +50,6 @@ class Replies {
     }
 
     public static String[] getFundGoalReplies() {
-        return new String[] {"Сумма", "Валюта", "Создать", "Удалить", "Отмена"};
+        return new String[] {"Сумма", "Валюта", "Создать", "Удалить", "Назад"};
     }
 }

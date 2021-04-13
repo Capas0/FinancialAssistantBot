@@ -32,7 +32,7 @@ public class FundGoalProcessor extends StateProcessor {
                 FundGoal.disable(userId);
                 sendMessage.setText("Цель удалена.");
                 break;
-            case "Отмена":
+            case "Назад":
                 state = State.FUND;
                 sendMessage.setText(Fund.load(userId).toString());
                 break;

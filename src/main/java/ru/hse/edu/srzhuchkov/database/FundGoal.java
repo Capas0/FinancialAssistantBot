@@ -114,6 +114,33 @@ public class FundGoal {
         }
     }
 
+    public static boolean check(int userId) {
+        boolean res = false;
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT 1\n" +
+                            "FROM fund\n" +
+                            "JOIN fund_goal fg ON fund.user_id = fg.user_id\n" +
+                            " AND fund.currency = fg.currency\n" +
+                            "WHERE fg.user_id = ?\n" +
+                            " AND enabled\n" +
+                            " AND fund.value >= fg.amount"
+            );
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            res = resultSet.next();
+        } catch (SQLException throwables) {
+            System.out.println("Unable to disable the fund goal.");
+            throwables.printStackTrace();
+        }
+
+        if (res) {
+            disable(userId);
+        }
+
+        return res;
+    }
+
     @Override
     public String toString() {
         String begin = enabled ? "Текущая" : "Устанавливается";
