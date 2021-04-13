@@ -72,6 +72,11 @@ public class DBManager {
                     "USER_ID INTEGER PRIMARY KEY,\n" +
                             "VALUE INTEGER CHECK (VALUE >= 0)"
             );
+            createTable(connection, "FUND",
+                    "USER_ID INTEGER,\n" +
+                            "VALUE NUMERIC(18,2),\n" +
+                            "CURRENCY TEXT,\n" +
+                            "PRIMARY KEY (USER_ID, CURRENCY)");
             createTable(connection, "AMOUNT_EXPENSES_SETTINGS",
                     "USER_ID INTEGER PRIMARY KEY,\n" +
                             "BEG_DATE BIGINT,\n" +

@@ -117,6 +117,26 @@ public class TempPurchase {
             statement.setInt(1, userId);
             statement.executeUpdate();
 
+            statement = connection.prepareStatement(
+                    "INSERT INTO fund (user_id, value, currency)\n" +
+                            "SELECT user_id, 0, currency\n" +
+                            "FROM temp_purchase\n" +
+                            "WHERE user_id = ?\n" +
+                            "ON CONFLICT DO NOTHING "
+            );
+            statement.setInt(1, userId);
+
+            statement = connection.prepareStatement(
+                    "UPDATE fund\n" +
+                            "SET value = value - amount\n" +
+                            "FROM temp_purchase\n" +
+                            "WHERE fund.user_id = temp_purchase.user_id\n" +
+                            "AND fund.currency = temp_purchase.currency\n" +
+                            "AND temp_purchase.user_id = ?"
+            );
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+
             statement = connection.prepareStatement("DELETE FROM temp_purchase WHERE user_id = ?;");
             statement.setInt(1, userId);
             statement.executeUpdate();

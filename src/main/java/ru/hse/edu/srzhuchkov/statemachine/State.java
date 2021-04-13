@@ -28,7 +28,8 @@ public enum State {
     EXPENSES_BEGIN_DATE(new ExpensesBeginDateProcessor(), Replies.getDateReplies()),
     EXPENSES_END_DATE(new ExpensesEndDateProcessor(), Replies.getDateReplies()),
     DISPLAY_EXPENSES_CATEGORY(new DisplayExpensesCategoryProcessor(), Replies.getCategoryReplies()),
-    DISPLAY_AMOUNT_EXPENSES_CATEGORY_COHORTS(new DisplayAmountExpensesCategoryCohortsProcessor(), Replies.getCurrencyReplies());
+    DISPLAY_AMOUNT_EXPENSES_CATEGORY_COHORTS(new DisplayAmountExpensesCategoryCohortsProcessor(), Replies.getCurrencyReplies()),
+    FUND(new FundProcessor(), Replies.getFundReplies());
 
     private final StateProcessor processor;
     private final String[] replies;

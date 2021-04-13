@@ -3,6 +3,7 @@ package ru.hse.edu.srzhuchkov.statemachine.process;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.AmountExpensesSettings;
 import ru.hse.edu.srzhuchkov.database.ExpensesSettings;
+import ru.hse.edu.srzhuchkov.database.Fund;
 import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 
@@ -34,6 +35,10 @@ public class InitialProcessor extends StateProcessor {
             case "Распределение расходов по категориям":
                 state = State.DISPLAY_AMOUNT_EXPENSES_CATEGORY_COHORTS;
                 sendMessage.setText("Выберите валюту.");
+                break;
+            case "Счет":
+                state = State.FUND;
+                sendMessage.setText(Fund.format(Fund.getFund(userId)));
                 break;
         }
     }
