@@ -27,7 +27,8 @@ public enum State {
     DISPLAY_EXPENSES(new DisplayExpensesProcessor(), Replies.getDisplayExpensesReplies()),
     EXPENSES_BEGIN_DATE(new ExpensesBeginDateProcessor(), Replies.getDateReplies()),
     EXPENSES_END_DATE(new ExpensesEndDateProcessor(), Replies.getDateReplies()),
-    DISPLAY_EXPENSES_CATEGORY(new DisplayExpensesCategoryProcessor(), Replies.getCategoryReplies());
+    DISPLAY_EXPENSES_CATEGORY(new DisplayExpensesCategoryProcessor(), Replies.getCategoryReplies()),
+    DISPLAY_AMOUNT_EXPENSES_CATEGORY_COHORTS(new DisplayAmountExpensesCategoryCohorts(), Replies.getCurrencyReplies());
 
     private final StateProcessor processor;
     private final String[] replies;

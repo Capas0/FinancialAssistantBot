@@ -31,6 +31,10 @@ public class InitialProcessor extends StateProcessor {
                 state = State.DISPLAY_EXPENSES_CATEGORY;
                 sendMessage.setText("Выберите категорию.");
                 break;
+            case "Распределение расходов по категориям":
+                state = State.DISPLAY_AMOUNT_EXPENSES_CATEGORY_COHORTS;
+                sendMessage.setText("Выберите валюту.");
+                break;
         }
     }
 
