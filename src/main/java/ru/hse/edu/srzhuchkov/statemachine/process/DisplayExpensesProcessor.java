@@ -24,11 +24,11 @@ public class DisplayExpensesProcessor extends StateProcessor {
             case "Отобразить результат":
                 state = State.INITIAL;
                 ExpensesSettings.execute(userId, message.getChatId());
-                sendMessage.setText("Выберите функцию.");
+                sendMessage.setText("Выберите действие.");
                 break;
             case "Отмена":
                 state = State.INITIAL;
-                sendMessage.setText("Выберите функцию.");
+                sendMessage.setText("Выберите действие.");
                 break;
         }
     }

@@ -1,8 +1,8 @@
-package ru.hse.edu.srzhuchkov.statemachine;
+package ru.hse.edu.srzhuchkov.statemachine.process;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.DBManager;
-import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.State;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DisplayAmountExpensesCategoryCohorts extends StateProcessor {
+public class DisplayAmountExpensesCategoryCohortsProcessor extends StateProcessor {
     /**
      * Processes the received message in a certain state
      *
@@ -24,7 +24,7 @@ public class DisplayAmountExpensesCategoryCohorts extends StateProcessor {
         state = State.INITIAL;
 
         if (message.getText().equals("Отмена")) {
-            sendMessage.setText("Выберите функцию.");
+            sendMessage.setText("Выберите действие.");
         }
         else {
             String res = "";

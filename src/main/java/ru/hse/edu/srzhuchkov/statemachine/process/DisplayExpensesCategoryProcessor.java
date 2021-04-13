@@ -1,4 +1,4 @@
-package ru.hse.edu.srzhuchkov.statemachine;
+package ru.hse.edu.srzhuchkov.statemachine.process;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.hse.edu.srzhuchkov.database.CategorySlider;
 import ru.hse.edu.srzhuchkov.database.DBManager;
 import ru.hse.edu.srzhuchkov.database.Purchase;
-import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.State;
 import ru.hse.edu.srzhuchkov.telegram.Bot;
 
 import java.sql.Connection;
@@ -27,7 +27,7 @@ public class DisplayExpensesCategoryProcessor extends StateProcessor {
         if (!message.getText().equals("Отмена")) {
             execute(message);
         }
-        sendMessage.setText("Выберите функцию.");
+        sendMessage.setText("Выберите действие.");
     }
 
     /**

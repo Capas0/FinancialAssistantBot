@@ -37,7 +37,7 @@ public class DisplayExpensesAmountProcessor extends StateProcessor {
                 break;
             case "Отмена":
                 state = State.INITIAL;
-                sendMessage.setText("Выберите функцию.");
+                sendMessage.setText("Выберите действие.");
                 break;
         }
     }

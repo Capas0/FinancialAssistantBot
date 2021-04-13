@@ -40,6 +40,10 @@ public class ClearCommand extends BaseCommand {
             statement.setInt(1, user.getId());
             statement.executeUpdate();
 
+            statement = connection.prepareStatement("DELETE FROM fund WHERE user_id = ?");
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
+
             statement = connection.prepareStatement("DELETE FROM amount_expenses_settings WHERE user_id = ?");
             statement.setInt(1, user.getId());
             statement.executeUpdate();
