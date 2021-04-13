@@ -27,6 +27,8 @@ public class Purchase {
     @Setter
     private String description;
 
+    public static Purchase DUMMY = new Purchase();
+
     private Purchase() {
         date = new Date();
         amount = BigDecimal.ZERO;
@@ -60,7 +62,7 @@ public class Purchase {
             System.out.println("Unable to load the purchase for expenses.");
             throwables.printStackTrace();
         }
-        return new Purchase();
+        return DUMMY;
     }
 
     @Override

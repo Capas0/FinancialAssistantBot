@@ -113,7 +113,10 @@ public class ExpensesSettings {
                 prev = resultSet.getInt("prev");
                 next = resultSet.getInt("next");
             }
-            sendMessage.setText(Purchase.load(userId, purchaseId).toString());
+            Purchase purchase = Purchase.load(userId, purchaseId);
+            if (purchase != Purchase.DUMMY) {
+                sendMessage.setText(purchase.toString());
+            }
             sendMessage.setReplyMarkup(DateSlider.getMarkup(sliderId, prev, next));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
