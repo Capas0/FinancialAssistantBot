@@ -27,6 +27,10 @@ public class InitialProcessor extends StateProcessor {
                 state = State.DISPLAY_EXPENSES;
                 sendMessage.setText(ExpensesSettings.create(userId).toString());
                 break;
+            case "Расходы в категории":
+                state = State.DISPLAY_EXPENSES_CATEGORY;
+                sendMessage.setText("Выберите категорию.");
+                break;
         }
     }
 

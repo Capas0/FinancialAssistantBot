@@ -17,7 +17,7 @@ public enum State {
     ADD_PURCHASE_AMOUNT(new PurchaseAmountProcessor(), Replies.getCancelReplies()),
     ADD_PURCHASE_CURRENCY(new PurchaseCurrencyProcessor(), Replies.getCurrencyReplies()),
     ADD_PURCHASE_DATE(new PurchaseDateProcessor(), Replies.getDateReplies()),
-    ADD_PURCHASE_CATEGORY(new PurchaseCategoryProcessor(), Replies.getPurchaseCategoryReplies()),
+    ADD_PURCHASE_CATEGORY(new PurchaseCategoryProcessor(), Replies.getCategoryReplies()),
     ADD_PURCHASE_DESCRIPTION(new PurchaseDescriptionProcessor(), Replies.getPurchaseDescriptionReplies()),
     ADD_PURCHASE_QR(new PurchaseQRProcessor(), Replies.getCancelReplies()),
     DISPLAY_EXPENSES_AMOUNT(new DisplayExpensesAmountProcessor(), Replies.getDisplayExpensesAmountReplies()),
@@ -26,7 +26,8 @@ public enum State {
     EXPENSES_AMOUNT_CURRENCY(new ExpensesAmountCurrencyProcessor(), Replies.getCurrencyReplies()),
     DISPLAY_EXPENSES(new DisplayExpensesProcessor(), Replies.getDisplayExpensesReplies()),
     EXPENSES_BEGIN_DATE(new ExpensesBeginDateProcessor(), Replies.getDateReplies()),
-    EXPENSES_END_DATE(new ExpensesEndDateProcessor(), Replies.getDateReplies());
+    EXPENSES_END_DATE(new ExpensesEndDateProcessor(), Replies.getDateReplies()),
+    DISPLAY_EXPENSES_CATEGORY(new DisplayExpensesCategoryProcessor(), Replies.getCategoryReplies());
 
     private final StateProcessor processor;
     private final String[] replies;

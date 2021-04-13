@@ -2,7 +2,7 @@ package ru.hse.edu.srzhuchkov.statemachine;
 
 class Replies {
     static String[] getInitialReplies() {
-        return new String[] {"Добавить покупку", "Общая сумма расходов", "Список расходов"};
+        return new String[] {"Добавить покупку", "Общая сумма расходов", "Список расходов", "Расходы в категории"};
     }
 
     static String[] getAddPurchaseReplies() {
@@ -21,7 +21,7 @@ class Replies {
         return new String[] {"Сегодня", "Отмена"};
     }
 
-    static String[] getPurchaseCategoryReplies() {
+    static String[] getCategoryReplies() {
         return new String[] {"Без категории", "Авиабилеты", "Автоуслуги", "Аптеки", "Аренда авто", "Дом и ремонт",
                 "Железнодорожные билеты", "Животные", "Искусство", "Каршеринг", "Кино", "Книги", "Красота",
                 "Музыка", "Одежда и обувь", "Развлечения", "Рестораны", "Спорттовары", "Сувениры",

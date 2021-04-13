@@ -10,7 +10,7 @@ public class Slider {
             return DateSlider.process(query);
         }
         else {
-            return null;
+            return CategorySlider.process(query);
         }
     }
 }

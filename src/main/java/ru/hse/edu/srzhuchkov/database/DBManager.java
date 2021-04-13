@@ -84,6 +84,10 @@ public class DBManager {
                             "BEG_DATE BIGINT NOT NULL,\n" +
                             "END_DATE BIGINT NOT NULL"
             );
+            createTable(connection, "CATEGORY_SLIDER",
+                    "SLIDER_ID SERIAL PRIMARY KEY,\n" +
+                            "USER_ID INTEGER NOT NULL,\n" +
+                            "CATEGORY_ID INTEGER NOT NULL");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
