@@ -1,9 +1,21 @@
 package ru.hse.edu.srzhuchkov.statemachine.process;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.hse.edu.srzhuchkov.database.DBManager;
 import ru.hse.edu.srzhuchkov.statemachine.State;
+import ru.hse.edu.srzhuchkov.telegram.Bot;
 
+import javax.imageio.ImageIO;
+import java.awt.Color;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,6 +62,7 @@ public class DisplayAmountExpensesCategoryCohortsProcessor extends StateProcesso
                 }
                 if (categories.size() > 0) {
                     res = format(categories, amounts, currency);
+                    sendChart(message.getChatId(), categories, amounts);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -88,5 +101,46 @@ public class DisplayAmountExpensesCategoryCohortsProcessor extends StateProcesso
         }
 
         return stringBuilder.toString();
+    }
+
+    private static void sendChart(long chatId, List<String> categories, List<String> amounts) {
+        InputStream stream = createChart(createDataset(categories, amounts));
+        SendPhoto sendPhoto = new SendPhoto(String.valueOf(chatId), new InputFile(stream, "chart.png"));
+        try {
+            Bot.getInstance().execute(sendPhoto);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static PieDataset<String> createDataset(List<String> categories, List<String> amounts) {
+        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+        for (int i = 0; i < categories.size(); i++) {
+            dataset.setValue(categories.get(i), Double.valueOf(amounts.get(i).replace(',', '.')));
+        }
+        return dataset;
+    }
+
+    private static InputStream createChart(PieDataset<String> dataset) {
+        JFreeChart chart = ChartFactory.createPieChart(
+                "", dataset, false, true, false
+        );
+
+        chart.setBackgroundPaint(Color.lightGray);
+
+        PiePlot plot = (PiePlot) chart.getPlot();
+
+        plot.setInteriorGap(0.04);
+        plot.setOutlineVisible(false);
+        plot.setLabelBackgroundPaint(Color.white);
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(chart.createBufferedImage(750, 450), "png", os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ByteArrayInputStream(os.toByteArray());
     }
 }
