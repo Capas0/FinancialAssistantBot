@@ -1,12 +1,13 @@
-package ru.hse.edu.srzhuchkov.statemachine.process.goal;
+package ru.hse.edu.srzhuchkov.statemachine.process.fund.goal;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.FundGoal;
 import ru.hse.edu.srzhuchkov.statemachine.State;
-import ru.hse.edu.srzhuchkov.statemachine.process.AmountProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
 
-public class FundGoalAmountProcessor extends AmountProcessor {
+import java.util.Currency;
 
+public class FundGoalCurrencyProcessor extends StateProcessor {
     /**
      * Processes the received message in a certain state
      *
@@ -17,8 +18,8 @@ public class FundGoalAmountProcessor extends AmountProcessor {
         state = State.FUND_GOAL;
 
         FundGoal goal = FundGoal.load(userId);
-        if (!button && goal != null) {
-            goal.setAmount(amount);
+        if (!message.getText().equals("Отмена") && goal != null) {
+            goal.setCurrency(Currency.getInstance(message.getText()));
             goal.save();
         }
         if (goal != null) {
@@ -36,6 +37,6 @@ public class FundGoalAmountProcessor extends AmountProcessor {
      */
     @Override
     public State getState() {
-        return State.FUND_GOAL_AMOUNT;
+        return State.FUND_GOAL_CURRENCY;
     }
 }

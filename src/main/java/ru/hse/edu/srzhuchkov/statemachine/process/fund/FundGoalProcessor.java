@@ -1,9 +1,10 @@
-package ru.hse.edu.srzhuchkov.statemachine.process;
+package ru.hse.edu.srzhuchkov.statemachine.process.fund;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hse.edu.srzhuchkov.database.Fund;
 import ru.hse.edu.srzhuchkov.database.FundGoal;
 import ru.hse.edu.srzhuchkov.statemachine.State;
+import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
 
 public class FundGoalProcessor extends StateProcessor {
     /**

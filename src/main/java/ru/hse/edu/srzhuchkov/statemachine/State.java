@@ -11,8 +11,10 @@ import ru.hse.edu.srzhuchkov.statemachine.process.expenses.ExpensesEndDateProces
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountBeginDateProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountCurrencyProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.expensesamount.ExpensesAmountEndDateProcessor;
-import ru.hse.edu.srzhuchkov.statemachine.process.goal.FundGoalAmountProcessor;
-import ru.hse.edu.srzhuchkov.statemachine.process.goal.FundGoalCurrencyProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.fund.FundDepositProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.fund.FundGoalProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.fund.goal.FundGoalAmountProcessor;
+import ru.hse.edu.srzhuchkov.statemachine.process.fund.goal.FundGoalCurrencyProcessor;
 import ru.hse.edu.srzhuchkov.statemachine.process.purchase.*;
 
 public enum State {

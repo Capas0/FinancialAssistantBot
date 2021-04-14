@@ -54,9 +54,9 @@ public class DisplayAmountExpensesCategoryCohortsProcessor extends StateProcesso
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            String text = res.length() > 0 ? res : "Нет трат в данной валюте.";
+            String text = res.length() > 0 ? "`" + res + "`" : "Нет трат в данной валюте.";
             sendMessage.enableMarkdown(true);
-            sendMessage.setText("`" + text + "`");
+            sendMessage.setText(text);
         }
     }
 
