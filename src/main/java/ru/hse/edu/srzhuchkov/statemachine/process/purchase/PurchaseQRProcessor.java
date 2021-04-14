@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.hse.edu.srzhuchkov.QRCodeReader;
+import ru.hse.edu.srzhuchkov.database.BotUser;
 import ru.hse.edu.srzhuchkov.database.TempPurchase;
 import ru.hse.edu.srzhuchkov.statemachine.State;
 import ru.hse.edu.srzhuchkov.statemachine.process.StateProcessor;
@@ -31,6 +32,7 @@ public class PurchaseQRProcessor extends StateProcessor {
             state = State.ADD_PURCHASE;
             TempPurchase tempPurchase = TempPurchase.load(userId);
             sendMessage.setText(tempPurchase.toString());
+            BotUser.setState(userId, state);
         }
         else {
             sendMessage.setText("Фото не получено.");
