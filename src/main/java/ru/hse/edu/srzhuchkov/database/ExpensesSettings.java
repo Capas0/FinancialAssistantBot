@@ -50,8 +50,9 @@ public class ExpensesSettings {
             statement.setLong(3, settings.endDate.getTime());
             statement.setLong(4, settings.endDate.getTime());
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new ExpensesSettings(resultSet);
+            if (resultSet.next()) {
+                return new ExpensesSettings(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to create a settings for expenses.");
             throwables.printStackTrace();
@@ -66,8 +67,9 @@ public class ExpensesSettings {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new ExpensesSettings(resultSet);
+            if (resultSet.next()) {
+                return new ExpensesSettings(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to load the settings for expenses.");
             throwables.printStackTrace();

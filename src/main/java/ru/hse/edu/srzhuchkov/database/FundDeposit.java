@@ -54,8 +54,9 @@ public class FundDeposit {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new FundDeposit(resultSet);
+            if (resultSet.next()) {
+                return new FundDeposit(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to load the fund deposit.");
             throwables.printStackTrace();

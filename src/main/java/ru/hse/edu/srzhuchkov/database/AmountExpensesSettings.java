@@ -54,8 +54,9 @@ public class AmountExpensesSettings {
             statement.setLong(3, settings.endDate.getTime());
             statement.setLong(4, settings.endDate.getTime());
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new AmountExpensesSettings(resultSet);
+            if (resultSet.next()) {
+                return new AmountExpensesSettings(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to create a settings for amount expenses.");
             throwables.printStackTrace();
@@ -70,8 +71,9 @@ public class AmountExpensesSettings {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new AmountExpensesSettings(resultSet);
+            if (resultSet.next()) {
+                return new AmountExpensesSettings(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to load the settings for amount expenses.");
             throwables.printStackTrace();
@@ -112,8 +114,12 @@ public class AmountExpensesSettings {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            result = resultSet.getBigDecimal(1);
+            if (resultSet.next()) {
+                result = resultSet.getBigDecimal(1);
+            }
+            if (result == null) {
+                result = BigDecimal.ZERO;
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to calculate amount expenses.");
             throwables.printStackTrace();

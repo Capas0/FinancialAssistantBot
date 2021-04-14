@@ -33,8 +33,9 @@ public class BotUser {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            state = State.values()[resultSet.getInt(1)];
+            if (resultSet.next()) {
+                state = State.values()[resultSet.getInt(1)];
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to load a user's state.");
             throwables.printStackTrace();

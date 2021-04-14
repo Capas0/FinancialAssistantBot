@@ -58,8 +58,9 @@ public class TempPurchase {
             statement.setLong(2, tempPurchase.date.getTime());
             statement.setLong(3, tempPurchase.date.getTime());
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new TempPurchase(resultSet);
+            if (resultSet.next()) {
+                return new TempPurchase(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to create a temp purchase.");
             throwables.printStackTrace();
@@ -76,8 +77,9 @@ public class TempPurchase {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new TempPurchase(resultSet);
+            if (resultSet.next()) {
+                return new TempPurchase(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to load the temp purchase.");
             throwables.printStackTrace();

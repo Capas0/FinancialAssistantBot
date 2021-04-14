@@ -61,31 +61,14 @@ public class FundGoal {
             );
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new FundGoal(resultSet);
+            if (resultSet.next()) {
+                return new FundGoal(resultSet);
+            }
         } catch (SQLException throwables) {
             System.out.println("Unable to load the fund goal.");
             throwables.printStackTrace();
         }
         return null;
-    }
-
-    public void save() {
-        try (Connection connection = DBManager.getInstance().getConnection()) {
-            enabled = false;
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE fund_goal SET\n" +
-                            "amount = ?, currency = ?, enabled = FALSE\n" +
-                            "WHERE user_id = ?"
-            );
-            statement.setBigDecimal(1, amount);
-            statement.setString(2, currency.getCurrencyCode());
-            statement.setInt(3, userId);
-            statement.executeUpdate();
-        } catch (SQLException throwables) {
-            System.out.println("Unable to save the fund goal.");
-            throwables.printStackTrace();
-        }
     }
 
     public static void enable(int userId) {
@@ -139,6 +122,24 @@ public class FundGoal {
         }
 
         return res;
+    }
+
+    public void save() {
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            enabled = false;
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE fund_goal SET\n" +
+                            "amount = ?, currency = ?, enabled = FALSE\n" +
+                            "WHERE user_id = ?"
+            );
+            statement.setBigDecimal(1, amount);
+            statement.setString(2, currency.getCurrencyCode());
+            statement.setInt(3, userId);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            System.out.println("Unable to save the fund goal.");
+            throwables.printStackTrace();
+        }
     }
 
     @Override
