@@ -1,8 +1,5 @@
 package ru.hse.edu.srzhuchkov.database;
 
-import lombok.Data;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,18 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 
-@Data
 public class Purchase {
-    @Setter
-    private Date date;
-    @Setter
-    private BigDecimal amount;
-    @Setter
-    private Currency currency;
-    @Setter
-    private String category;
-    @Setter
-    private String description;
+    private final Date date;
+    private final BigDecimal amount;
+    private final Currency currency;
+    private final String category;
+    private final String description;
 
     public static Purchase DUMMY = new Purchase();
 

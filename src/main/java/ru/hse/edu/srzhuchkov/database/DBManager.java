@@ -12,7 +12,7 @@ public class DBManager {
     private final String user;
     private final String password;
 
-    public DBManager() {
+    private DBManager() {
         Map<String, String> env = System.getenv();
         url = env.get("DB_URL");
         user = env.get("DB_USER");
